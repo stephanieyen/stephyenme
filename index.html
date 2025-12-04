@@ -13,18 +13,17 @@
 
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background-color: #64748b;
-            color: #f1f5f9;
+            background-color: #F5F5F0;
+            color: #2d3748;
             line-height: 1.6;
         }
 
         nav {
-            background-color: #475569;
-            padding: 1.5rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            background-color: transparent;
+            padding: 2rem 2rem;
+            border-bottom: none;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         nav ul {
@@ -36,20 +35,20 @@
         }
 
         nav a {
-            color: #f1f5f9;
+            color: #2d3748;
             text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+            font-size: 1rem;
+            transition: opacity 0.3s;
         }
 
         nav a:hover {
-            color: #cbd5e1;
+            opacity: 0.7;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
         }
 
         .page {
@@ -71,13 +70,14 @@
             margin-bottom: 1rem;
             font-weight: 400;
             letter-spacing: -1px;
+            color: #2d3748;
         }
 
         h2 {
             font-size: 2rem;
             margin-bottom: 1.5rem;
             font-weight: 400;
-            color: #e2e8f0;
+            color: #2d3748;
         }
 
         p {
@@ -87,64 +87,157 @@
         }
 
         .hero {
-            min-height: 60vh;
+            min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
+        .postcard {
+            background-color: #CAE5FF;
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid rgba(45, 55, 72, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .postcard:hover {
+            transform: translateY(-5px) rotate(var(--hover-rotate, 0deg));
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+        }
+
+        .postcard h1 {
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .postcard .subtitle {
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+
+        .postcard p {
+            margin-bottom: 0;
+            color: #2d3748;
+        }
+
+        .postcard h2 {
+            color: #2d3748;
+        }
+
         .subtitle {
             font-size: 1.5rem;
-            color: #cbd5e1;
+            color: #4a5568;
             margin-bottom: 2rem;
             font-style: italic;
         }
 
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 0;
         }
 
         .card {
-            background-color: #475569;
-            padding: 2rem;
+            background-color: #CAE5FF;
+            padding: 2.5rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(45, 55, 72, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transform: translateY(-8px) rotate(var(--hover-rotate, 0deg));
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+        }
+
+        .card.expanded {
+            transform: scale(1.02) rotate(0deg) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         }
 
         .card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #f1f5f9;
+            color: #2d3748;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card p {
-            font-size: 1rem;
-            color: #cbd5e1;
+            font-size: 1.05rem;
+            color: #2d3748;
+            margin-bottom: 0;
         }
 
-        .cta {
+        .expand-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: #4a5568;
+        }
+
+        .card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.4s ease;
+        }
+
+        .card.expanded .card-content {
+            max-height: 500px;
+            margin-top: 1.5rem;
+        }
+
+        .card-content p {
+            margin-bottom: 1rem;
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.4s ease;
+        }
+
+        .postcard.expanded .expandable-content {
+            max-height: 800px;
+            margin-top: 1.5rem;
+        }
+
+        .postcard.expanded {
+            transform: scale(1.02) rotate(0deg) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .expand-btn {
             display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            background-color: #475569;
-            color: #f1f5f9;
-            text-decoration: none;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(45, 55, 72, 0.1);
+            color: #2d3748;
+            border: 1px solid rgba(45, 55, 72, 0.2);
             border-radius: 4px;
-            transition: background-color 0.3s;
-            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 0.95rem;
         }
 
-        .cta:hover {
-            background-color: #334155;
+        .expand-btn:hover {
+            background-color: rgba(45, 55, 72, 0.15);
         }
 
         @media (max-width: 768px) {
@@ -160,6 +253,15 @@
                 flex-direction: column;
                 gap: 1rem;
             }
+
+            .container {
+                padding: 3rem 2rem;
+                margin: 1rem;
+            }
+
+            nav {
+                padding: 1.5rem 2rem;
+            }
         }
     </style>
 </head>
@@ -174,50 +276,131 @@
     <div class="container">
         <!-- Home Page -->
         <div id="home" class="page active">
-            <div class="hero">
+            <div class="hero postcard" onclick="toggleOverview(event)">
                 <h1>Your Name</h1>
                 <p class="subtitle">Building at the intersection of tech, words, and sound</p>
                 <p>Welcome. I work in tech startups, write about what matters, and create music that moves.</p>
-                <a href="#" class="cta" data-page="about">Learn more about my work</a>
+                <button class="expand-btn" onclick="toggleOverview(event)">Read more ↓</button>
+                
+                <div class="expandable-content">
+                    <p>I've spent the last decade navigating the unpredictable waters of startups, where every day brings a new challenge and every decision can reshape the trajectory of a company. But my journey isn't confined to spreadsheets and pitch decks.</p>
+                    
+                    <p>Writing has always been my way of processing the world—turning complex ideas into clear narratives, whether it's dissecting the latest tech trends or exploring the cultural shifts happening around us. And when words aren't enough, I turn to music, creating soundscapes that capture emotions words can't reach.</p>
+                    
+                    <p>This portfolio is a window into those three worlds. Explore each to see how they intertwine and inform one another.</p>
+                </div>
             </div>
 
             <div class="grid">
-                <div class="card">
-                    <h3>Tech Startups</h3>
+                <div class="card" onclick="toggleCard(this)">
+                    <h3>
+                        Tech Startups
+                        <span class="expand-icon">↓</span>
+                    </h3>
                     <p>Navigating the fast-paced world of innovation, building products that solve real problems, and helping teams scale from zero to one.</p>
+                    <div class="card-content">
+                        <p><strong>Current Focus:</strong> Working on growth strategy and product development for early-stage B2B SaaS companies. I specialize in finding product-market fit and scaling go-to-market motions.</p>
+                        <p><strong>Previous Experience:</strong> Led product teams at two venture-backed startups from pre-seed to Series A, managing everything from user research to roadmap planning to cross-functional execution.</p>
+                        <p><strong>Philosophy:</strong> The best products emerge from deep customer empathy combined with ruthless prioritization. Build less, but build it better.</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Writing</h3>
+
+                <div class="card" onclick="toggleCard(this)">
+                    <h3>
+                        Writing
+                        <span class="expand-icon">↓</span>
+                    </h3>
                     <p>Exploring ideas through essays, articles, and long-form pieces. Expect thoughts on technology, culture, and the creative process.</p>
+                    <div class="card-content">
+                        <p><strong>Topics I Cover:</strong> The intersection of technology and society, lessons from startup life, the evolution of remote work, and the role of creativity in business.</p>
+                        <p><strong>Recent Pieces:</strong> "Why Most Startup Advice is Wrong," "The Case for Slower Growth," and "Finding Signal in the Noise: A Framework for Decision Making."</p>
+                        <p><strong>Where to Read:</strong> My essays appear on my personal blog, Medium, and occasionally in tech publications. I publish weekly on Thursdays.</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Music</h3>
+
+                <div class="card" onclick="toggleCard(this)">
+                    <h3>
+                        Music
+                        <span class="expand-icon">↓</span>
+                    </h3>
                     <p>Composing and producing soundscapes that tell stories without words. From ambient textures to full arrangements.</p>
+                    <div class="card-content">
+                        <p><strong>Style:</strong> My work blends ambient electronica with neo-classical elements—think Nils Frahm meets Jon Hopkins. I focus on creating emotional landscapes that shift and evolve.</p>
+                        <p><strong>Latest Project:</strong> "Liminal Spaces," a 7-track EP exploring transitions and in-between moments. Released on all streaming platforms.</p>
+                        <p><strong>Process:</strong> I compose primarily with piano and modular synths, layering textures and building narratives through sound. Each piece starts with a feeling I want to capture.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- About Page -->
         <div id="about" class="page">
-            <h1>About</h1>
-            <p>I'm someone who thrives at intersections. Where technology meets human need. Where structured thinking meets creative expression. Where business strategy meets artistic vision.</p>
+            <div class="postcard">
+                <h1>About</h1>
+                <p>I'm someone who thrives at intersections. Where technology meets human need. Where structured thinking meets creative expression. Where business strategy meets artistic vision.</p>
+            </div>
             
-            <h2>Tech Startups</h2>
-            <p>Currently working in the startup ecosystem, I focus on [your specific role: product, growth, operations, etc.]. I've helped [companies/teams] scale from early stage to [milestone], working on everything from go-to-market strategy to product development. I believe the best products are built when you deeply understand both the technology and the people using it.</p>
+            <div class="postcard">
+                <h2>Tech Startups</h2>
+                <p>Currently working in the startup ecosystem, I focus on [your specific role: product, growth, operations, etc.]. I've helped [companies/teams] scale from early stage to [milestone], working on everything from go-to-market strategy to product development. I believe the best products are built when you deeply understand both the technology and the people using it.</p>
+            </div>
 
-            <h2>Writing</h2>
-            <p>Writing is how I make sense of the world. I publish essays on [topics you care about: tech trends, startup lessons, cultural observations, etc.]. My work has appeared in [publications, or say "various online platforms" if just starting]. I'm drawn to questions that don't have easy answers and ideas that challenge conventional thinking.</p>
+            <div class="postcard">
+                <h2>Writing</h2>
+                <p>Writing is how I make sense of the world. I publish essays on [topics you care about: tech trends, startup lessons, cultural observations, etc.]. My work has appeared in [publications, or say "various online platforms" if just starting]. I'm drawn to questions that don't have easy answers and ideas that challenge conventional thinking.</p>
+            </div>
 
-            <h2>Music</h2>
-            <p>Music has been a constant companion since [when you started]. I create [genre/style] and release work under [artist name or "various projects"]. For me, music is about creating emotional spaces—moments of reflection, energy, or contemplation. You can find my work on [platforms].</p>
+            <div class="postcard">
+                <h2>Music</h2>
+                <p>Music has been a constant companion since [when you started]. I create [genre/style] and release work under [artist name or "various projects"]. For me, music is about creating emotional spaces—moments of reflection, energy, or contemplation. You can find my work on [platforms].</p>
+            </div>
 
-            <h2>Get In Touch</h2>
-            <p>I'm always interested in connecting with people working on meaningful projects. Whether you want to discuss startup ideas, collaborate on creative work, or just have a conversation, feel free to reach out at [your@email.com] or find me on [Twitter/LinkedIn/etc.].</p>
+            <div class="postcard">
+                <h2>Get In Touch</h2>
+                <p>I'm always interested in connecting with people working on meaningful projects. Whether you want to discuss startup ideas, collaborate on creative work, or just have a conversation, feel free to reach out at [your@email.com] or find me on [Twitter/LinkedIn/etc.].</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Simple page navigation
+        // Set random initial positions and rotation angles
+        function randomizeCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                // Random initial rotation (-3 to 3 degrees)
+                const initialRotate = (Math.random() - 0.5) * 6;
+                card.style.setProperty('--initial-rotate', `${initialRotate}deg`);
+                card.style.transform = `rotate(${initialRotate}deg)`;
+                
+                // Random hover rotation for variety (-4 to 4 degrees)
+                const hoverRotate = (Math.random() - 0.5) * 8;
+                card.style.setProperty('--hover-rotate', `${hoverRotate}deg`);
+                
+                // Random horizontal offset (-15 to 15 pixels)
+                const offset = (Math.random() - 0.5) * 30;
+                card.style.marginLeft = `${offset}px`;
+            });
+        }
+
+        // Randomize on load
+        randomizeCards();
+
+        // Re-randomize hover angle on each mouseenter for variety
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const newHoverRotate = (Math.random() - 0.5) * 8;
+                card.style.setProperty('--hover-rotate', `${newHoverRotate}deg`);
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                if (!card.classList.contains('expanded')) {
+                    const initialRotate = card.style.getPropertyValue('--initial-rotate');
+                    card.style.transform = `rotate(${initialRotate})`;
+                }
+            });
+        });
+
+        // Page navigation
         const pages = document.querySelectorAll('.page');
         const navLinks = document.querySelectorAll('nav a');
 
@@ -231,13 +414,10 @@
                 });
                 
                 document.getElementById(targetPage).classList.add('active');
-                
-                // Update URL without page reload
                 window.history.pushState({}, '', `#${targetPage}`);
             });
         });
 
-        // Handle back/forward browser buttons
         window.addEventListener('popstate', () => {
             const hash = window.location.hash.slice(1) || 'home';
             pages.forEach(page => {
@@ -245,6 +425,39 @@
             });
             document.getElementById(hash).classList.add('active');
         });
+
+        // Toggle card expansion
+        function toggleCard(card) {
+            const wasExpanded = card.classList.contains('expanded');
+            
+            // Close all other cards
+            document.querySelectorAll('.card').forEach(c => {
+                c.classList.remove('expanded');
+                // Reset to initial rotation when closing
+                const initialRotate = c.style.getPropertyValue('--initial-rotate');
+                c.style.transform = `rotate(${initialRotate})`;
+            });
+            
+            // Toggle this card
+            if (!wasExpanded) {
+                card.classList.add('expanded');
+                card.style.transform = 'scale(1.02) rotate(0deg)';
+            }
+        }
+
+        // Toggle overview expansion
+        function toggleOverview(event) {
+            event.stopPropagation();
+            const overview = document.querySelector('.hero.postcard');
+            overview.classList.toggle('expanded');
+            
+            const btn = overview.querySelector('.expand-btn');
+            if (overview.classList.contains('expanded')) {
+                btn.textContent = 'Show less ↑';
+            } else {
+                btn.textContent = 'Read more ↓';
+            }
+        }
     </script>
 </body>
 </html>
