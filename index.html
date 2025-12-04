@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Tech, Writing & Music</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #64748b;
+            color: #f1f5f9;
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: #475569;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #f1f5f9;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #cbd5e1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            color: #e2e8f0;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+        }
+
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background-color: #475569;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #f1f5f9;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+
+        .cta {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background-color: #475569;
+            color: #f1f5f9;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .cta:hover {
+            background-color: #334155;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#" data-page="home">Home</a></li>
+            <li><a href="#" data-page="about">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Your Name</h1>
+                <p class="subtitle">Building at the intersection of tech, words, and sound</p>
+                <p>Welcome. I work in tech startups, write about what matters, and create music that moves.</p>
+                <a href="#" class="cta" data-page="about">Learn more about my work</a>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>Tech Startups</h3>
+                    <p>Navigating the fast-paced world of innovation, building products that solve real problems, and helping teams scale from zero to one.</p>
+                </div>
+                <div class="card">
+                    <h3>Writing</h3>
+                    <p>Exploring ideas through essays, articles, and long-form pieces. Expect thoughts on technology, culture, and the creative process.</p>
+                </div>
+                <div class="card">
+                    <h3>Music</h3>
+                    <p>Composing and producing soundscapes that tell stories without words. From ambient textures to full arrangements.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <h1>About</h1>
+            <p>I'm someone who thrives at intersections. Where technology meets human need. Where structured thinking meets creative expression. Where business strategy meets artistic vision.</p>
+            
+            <h2>Tech Startups</h2>
+            <p>Currently working in the startup ecosystem, I focus on [your specific role: product, growth, operations, etc.]. I've helped [companies/teams] scale from early stage to [milestone], working on everything from go-to-market strategy to product development. I believe the best products are built when you deeply understand both the technology and the people using it.</p>
+
+            <h2>Writing</h2>
+            <p>Writing is how I make sense of the world. I publish essays on [topics you care about: tech trends, startup lessons, cultural observations, etc.]. My work has appeared in [publications, or say "various online platforms" if just starting]. I'm drawn to questions that don't have easy answers and ideas that challenge conventional thinking.</p>
+
+            <h2>Music</h2>
+            <p>Music has been a constant companion since [when you started]. I create [genre/style] and release work under [artist name or "various projects"]. For me, music is about creating emotional spaces—moments of reflection, energy, or contemplation. You can find my work on [platforms].</p>
+
+            <h2>Get In Touch</h2>
+            <p>I'm always interested in connecting with people working on meaningful projects. Whether you want to discuss startup ideas, collaborate on creative work, or just have a conversation, feel free to reach out at [your@email.com] or find me on [Twitter/LinkedIn/etc.].</p>
+        </div>
+    </div>
+
+    <script>
+        // Simple page navigation
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('nav a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = link.getAttribute('data-page');
+                
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                document.getElementById(targetPage).classList.add('active');
+                
+                // Update URL without page reload
+                window.history.pushState({}, '', `#${targetPage}`);
+            });
+        });
+
+        // Handle back/forward browser buttons
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.slice(1) || 'home';
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(hash).classList.add('active');
+        });
+    </script>
+</body>
+</html>
