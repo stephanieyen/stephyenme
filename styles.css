@@ -1,0 +1,314 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #F5F5F0;
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+nav {
+    background-color: transparent;
+    padding: 2rem 2rem;
+    border-bottom: none;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a {
+    color: #2d3748;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: opacity 0.3s;
+}
+
+nav a:hover {
+    opacity: 0.7;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    letter-spacing: -1px;
+    color: #2d3748;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    color: #2d3748;
+}
+
+p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+}
+
+.hero {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Shared card styles for both .card and .postcard */
+.card,
+.postcard {
+    background-color: #CAE5FF;
+    padding: 3rem;
+    border-radius: 8px;
+    border: 1px solid rgba(45, 55, 72, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2rem;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    position: relative;
+    --initial-rotate: 0deg;
+    --hover-rotate: 0deg;
+    --scale: 1;
+    transform: translateY(0) rotate(var(--initial-rotate)) scale(var(--scale));
+}
+
+.card:hover,
+.postcard:hover {
+    transform: translateY(-8px) rotate(var(--hover-rotate, var(--initial-rotate))) scale(var(--scale));
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
+
+.card.expanded,
+.postcard.expanded {
+    --hover-rotate: 0deg;
+    --initial-rotate: 0deg;
+    --scale: 1.02;
+    transform: scale(var(--scale)) rotate(0deg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* Specific adjustments for .card */
+.card {
+    padding: 2.5rem;
+    position: relative;
+    overflow: visible;
+}
+
+/* Specific adjustments for .postcard */
+.postcard h1 {
+    margin-bottom: 0.5rem;
+    color: #2d3748;
+}
+
+.postcard .subtitle {
+    margin-bottom: 1rem;
+    color: #4a5568;
+}
+
+.postcard p {
+    margin-bottom: 0;
+    color: #2d3748;
+}
+
+.postcard h2 {
+    color: #2d3748;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #4a5568;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 0;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2d3748;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card p {
+    font-size: 1.05rem;
+    color: #2d3748;
+    margin-bottom: 0;
+}
+
+.expand-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    color: #4a5568;
+}
+
+.card.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* Expandable content for both card types */
+.card-content,
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin-top 0.4s ease;
+}
+
+.card.expanded .card-content,
+.postcard.expanded .expandable-content {
+    max-height: 800px;
+    margin-top: 1.5rem;
+}
+
+.card-content p {
+    margin-bottom: 1rem;
+}
+
+/* Card stack styling */
+.card-stack {
+    position: absolute;
+    top: 0;
+    left: 110%;
+    width: max-content;
+    height: max-content;
+    pointer-events: auto;
+    z-index: 1;
+    opacity: 0;
+}
+
+.stack-card {
+    position: absolute; /* relative to postcard */
+    top: 0;
+    left: 100%; /* start immediately to the right of postcard */
+    width: 180px;
+    height: 250px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(45, 55, 72, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    background-color: #CAE5FF;
+    opacity: 0;
+    transform: translateX(20px) translateY(0) scale(0.95);
+    transition: all 0.4s ease;
+    pointer-events: auto; /* allow clicking */
+    cursor: pointer;
+    z-index: 10;
+}
+
+.stack-card-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stack-card h4 {
+    font-size: 1.1rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.stack-card p {
+    font-size: 0.95rem;
+    color: #4a5568;
+    margin-bottom: 0;
+}
+
+/* Position stack cards randomly from center */
+.card.expanded .stack-card {
+    transform: translateX(var(--stack-x, 0)) translateY(var(--stack-y, 0));
+}
+
+/* Position each stack card with slight offset to the right and below */
+/* .card.expanded .stack-card:nth-child(1) {
+    transform: translateX(calc(100% - 40px)) translateY(15px);
+}
+
+.card.expanded .stack-card:nth-child(2) {
+    transform: translateX(calc(100% - 20px)) translateY(30px);
+}
+
+.card.expanded .stack-card:nth-child(3) {
+    transform: translateX(100%) translateY(45px);
+} */
+
+.expand-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(45, 55, 72, 0.1);
+    color: #2d3748;
+    border: 1px solid rgba(45, 55, 72, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 0.95rem;
+}
+
+.expand-btn:hover {
+    background-color: rgba(45, 55, 72, 0.15);
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .container {
+        padding: 3rem 2rem;
+        margin: 1rem;
+    }
+
+    nav {
+        padding: 1.5rem 2rem;
+    }
+}
