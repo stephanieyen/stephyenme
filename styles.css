@@ -207,7 +207,7 @@ p {
 /* Card stack styling */
 .card-stack {
     position: absolute;
-    top: 0;
+    top: 15%;
     left: 110%;
     width: max-content;
     height: max-content;
@@ -216,12 +216,16 @@ p {
     opacity: 0;
 }
 
+.card.expanded .card-stack {
+    opacity: 1;
+}
+
 .stack-card {
     position: absolute; /* relative to postcard */
     top: 0;
     left: 100%; /* start immediately to the right of postcard */
-    width: 180px;
-    height: 250px;
+    width: 190px;
+    height: 260px;
     padding: 1.5rem;
     border-radius: 8px;
     border: 1px solid rgba(45, 55, 72, 0.1);

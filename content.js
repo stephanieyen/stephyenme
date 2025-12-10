@@ -3,7 +3,7 @@
 
 const portfolioContent = {
   // HEADER / OVERVIEW SECTION
-  name: "Your Name",
+  name: "Steph Yen",
   tagline: "Building at the intersection of tech, words, and sound",
   welcomeText: "Welcome. I work in tech startups, write about what matters, and create music that moves.",
   

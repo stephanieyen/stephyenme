@@ -211,7 +211,7 @@ function toggleCard(card) {
         stackCards.forEach((stackCard, index) => {
             const yOffset = spacingY * index;
             const scale = Math.pow(scaleStep, index);
-            stackCard.style.transform = `translateX(20px) translateY(${yOffset}px) scale(${scale})`;
+            stackCard.style.transform = `translateX(0) translateY(${yOffset}px) scale(${scale})`;
             stackCard.style.opacity = '1';
             stackCard.style.zIndex = `${index + 1}`;
         });
@@ -233,41 +233,42 @@ function toggleOverview(event) {
 }
 
 // Initialize stack cycling for each postcard
+// Initialize stack cycling for each postcard
 document.querySelectorAll('.card').forEach(card => {
     const stackCards = card.querySelectorAll('.stack-card');
     if (!stackCards.length) return;
 
     // Store which stack card is currently "pulled up"
-    card.stackCurrentIndex = 0;
+    card.stackCurrentIndex = -1;
 
     // Position stack cards initially with vertical offset
     stackCards.forEach((stackCard, i) => {
-        stackCard.style.transform = `translateY(${i * 20}px)`; // layered stack
-        stackCard.style.zIndex = i; // bottom cards behind top
+        const reverseIndex = stackCards.length - 1 - i; // reverse order
+        stackCard.style.transform = `translateY(${reverseIndex * 140}px)`; // layered stack
+        stackCard.style.zIndex = i; // front card has highest z-index
         stackCard.style.transition = 'transform 0.4s ease, z-index 0s';
         stackCard.style.opacity = 1; // keep visible
     });
 
     // Click handler to cycle stack cards
-    stackCards.forEach(stackCard => {
+    stackCards.forEach((stackCard, clickedIndex) => {
         stackCard.addEventListener('click', (e) => {
             e.stopPropagation();
 
             const total = stackCards.length;
-            const prevIndex = card.stackCurrentIndex;
-
-            // Move previous pulled card back to stack
-            const prevCard = stackCards[prevIndex];
-            prevCard.style.transform = `translateY(${prevIndex * 20}px)`;
-            prevCard.style.zIndex = prevIndex;
-
-            // Update current index
-            card.stackCurrentIndex = (card.stackCurrentIndex + 1) % total;
-            const nextCard = stackCards[card.stackCurrentIndex];
-
-            // Animate next card "up" so it fully reveals
-            nextCard.style.transform = `translateY(-20px)`; // pulled up
-            nextCard.style.zIndex = total; // bring to front
+            
+            // Reset ALL cards to their original positions first
+            stackCards.forEach((card, idx) => {
+                const reverseIndex = total - 1 - idx;
+                card.style.transform = `translateY(${reverseIndex * 40}px)`;
+                card.style.zIndex = idx;
+            });
+            
+            // Then move only the clicked card up and to the right
+            stackCard.style.transform = `translateX(50px) translateY(-30px)`;
+            stackCard.style.zIndex = total;
+            
+            card.stackCurrentIndex = clickedIndex;
         });
     });
 });
