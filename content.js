@@ -3,9 +3,9 @@
 
 const portfolioContent = {
   // HEADER / OVERVIEW SECTION
-  name: "Steph Yen",
-  tagline: "Building at the intersection of tech, words, and sound",
-  welcomeText: "Welcome. I work in tech startups, write about what matters, and create music that moves.",
+  name: "stephanie yen",
+  tagline: "based in nyc • tech, media, cities",
+  welcomeText: "nice to meet you! here is my home for the things I build, write, and explore.",
   
   // EXPANDED OVERVIEW (shown when you click "Read more")
   overviewExpanded: [
@@ -14,9 +14,9 @@ const portfolioContent = {
     "This portfolio is a window into those three worlds. Explore each to see how they intertwine and inform one another."
   ],
 
-  // TECH STARTUPS CARD
+  // MAIN SECTIONS
   tech: {
-    title: "Tech Startups",
+    title: "technology",
     summary: "Navigating the fast-paced world of innovation, building products that solve real problems, and helping teams scale from zero to one.",
     details: {
       focus: "Working on growth strategy and product development for early-stage B2B SaaS companies. I specialize in finding product-market fit and scaling go-to-market motions.",
@@ -46,9 +46,8 @@ const portfolioContent = {
     ]
   },
 
-  // WRITING CARD
   writing: {
-    title: "Writing",
+    title: "media",
     summary: "Exploring ideas through essays, articles, and long-form pieces. Expect thoughts on technology, culture, and the creative process.",
     details: {
       topics: "The intersection of technology and society, lessons from startup life, the evolution of remote work, and the role of creativity in business.",
@@ -78,9 +77,8 @@ const portfolioContent = {
     ]
   },
 
-  // MUSIC CARD
   music: {
-    title: "Music",
+    title: "cities",
     summary: "Composing and producing soundscapes that tell stories without words. From ambient textures to full arrangements.",
     details: {
       style: "My work blends ambient electronica with neo-classical elements—think Nils Frahm meets Jon Hopkins. I focus on creating emotional landscapes that shift and evolve.",
@@ -112,6 +110,8 @@ const portfolioContent = {
 
   // ABOUT PAGE
   about: {
+    bio: "Here is my actual bio.",
+
     intro: "I'm someone who thrives at intersections. Where technology meets human need. Where structured thinking meets creative expression. Where business strategy meets artistic vision.",
     
     techSection: "Currently working in the startup ecosystem, I focus on [your specific role: product, growth, operations, etc.]. I've helped [companies/teams] scale from early stage to [milestone], working on everything from go-to-market strategy to product development. I believe the best products are built when you deeply understand both the technology and the people using it.",

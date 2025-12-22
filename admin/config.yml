@@ -2,8 +2,8 @@ backend:
   name: github
   repo: stephanieyen/stephyenme
   branch: main
-  auth_type: implicit
-  app_id: Iv23liVXrug8LqRU5eWG
+  # auth_type: implicit
+  # app_id: Iv23liVXrug8LqRU5eWG
 
 media_folder: "images/uploads" # Where uploaded images will be stored
 public_folder: "/images/uploads" # Public URL path

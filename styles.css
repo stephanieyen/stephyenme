@@ -6,8 +6,8 @@
 
 body {
     font-family: 'Georgia', 'Times New Roman', serif;
-    background-color: #F5F5F0;
-    color: #2d3748;
+    background-color: #FAFAF8;
+    color: #1a1a1a;
     line-height: 1.6;
 }
 
@@ -28,7 +28,7 @@ nav ul {
 }
 
 nav a {
-    color: #2d3748;
+    color: #1a1a1a;
     text-decoration: none;
     font-size: 1rem;
     transition: opacity 0.3s;
@@ -63,14 +63,20 @@ h1 {
     margin-bottom: 1rem;
     font-weight: 400;
     letter-spacing: -1px;
-    color: #2d3748;
+    color: #1a1a1a;
 }
 
 h2 {
     font-size: 2rem;
     margin-bottom: 1.5rem;
     font-weight: 400;
-    color: #2d3748;
+    color: #1a1a1a;
+}
+
+/* Accent color for emphasis */
+strong,
+.accent {
+    color: #1e3a5f;
 }
 
 p {
@@ -86,14 +92,53 @@ p {
     justify-content: center;
 }
 
+/* Special styling for hero/name section - minimal banner style */
+.hero.postcard {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    border-bottom: 3px solid #1a1a1a;
+    border-radius: 0;
+    padding: 2rem 0 2rem 0;
+    cursor: default;
+    margin-bottom: 4rem;
+}
+
+.hero.postcard:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Minimal expand toggle for hero */
+.expand-toggle {
+    text-align: center;
+    margin-top: 1.5rem;
+    cursor: pointer;
+}
+
+.expand-arrow {
+    display: inline-block;
+    font-size: 1.5rem;
+    color: #4a4a4a;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.expand-toggle:hover .expand-arrow {
+    color: #00008B;
+}
+
+.hero.postcard.expanded .expand-arrow {
+    transform: rotate(180deg);
+}
+
 /* Shared card styles for both .card and .postcard */
 .card,
 .postcard {
-    background-color: #CAE5FF;
+    background-color: #FFFEF9;
     padding: 3rem;
     border-radius: 8px;
-    border: 1px solid rgba(45, 55, 72, 0.1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 2px solid #1a1a1a;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.15);
     margin-bottom: 2rem;
     transition: all 0.4s ease;
     cursor: pointer;
@@ -104,13 +149,6 @@ p {
     transform: translateY(0) rotate(var(--initial-rotate)) scale(var(--scale));
 }
 
-.card:hover,
-.postcard:hover {
-    transform: translateY(-8px) rotate(var(--hover-rotate, var(--initial-rotate))) scale(var(--scale));
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
-    z-index: 10;
-}
-
 .card.expanded,
 .postcard.expanded {
     --hover-rotate: 0deg;
@@ -118,6 +156,18 @@ p {
     --scale: 1.02;
     transform: scale(var(--scale)) rotate(0deg);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover,
+.postcard:hover {
+    transform: translateY(-8px) rotate(var(--hover-rotate, var(--initial-rotate))) scale(var(--scale));
+    box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Prevent rotation on expanded cards */
+.card.expanded:hover {
+    transform: translateY(-8px) rotate(0deg) scale(var(--scale));
 }
 
 /* Specific adjustments for .card */
@@ -164,7 +214,7 @@ p {
 .card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #2d3748;
+    color: #1a1a1a;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -172,8 +222,21 @@ p {
 
 .card p {
     font-size: 1.05rem;
-    color: #2d3748;
+    color: #1a1a1a;
     margin-bottom: 0;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #4a4a4a;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.expand-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    color: #4a4a4a;
 }
 
 .expand-icon {
@@ -221,20 +284,20 @@ p {
 }
 
 .stack-card {
-    position: absolute; /* relative to postcard */
+    position: absolute;
     top: 0;
-    left: 100%; /* start immediately to the right of postcard */
+    left: 100%;
     width: 190px;
     height: 260px;
     padding: 1.5rem;
     border-radius: 8px;
-    border: 1px solid rgba(45, 55, 72, 0.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    background-color: #CAE5FF;
+    border: 2px solid #1a1a1a;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
+    background-color: #FFFEF9;
     opacity: 0;
     transform: translateX(20px) translateY(0) scale(0.95);
     transition: all 0.4s ease;
-    pointer-events: auto; /* allow clicking */
+    pointer-events: auto;
     cursor: pointer;
     z-index: 10;
 }

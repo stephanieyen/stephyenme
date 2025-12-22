@@ -44,11 +44,13 @@ function populateContent() {
     `;
 
     // About page
-    document.getElementById('aboutIntro').textContent = portfolioContent.about.intro;
-    document.getElementById('aboutTech').textContent = portfolioContent.about.techSection;
-    document.getElementById('aboutWriting').textContent = portfolioContent.about.writingSection;
-    document.getElementById('aboutMusic').textContent = portfolioContent.about.musicSection;
-    document.getElementById('aboutContact').textContent = portfolioContent.about.contact;
+    const aboutBio = document.getElementById('aboutBio');
+    // Split by \n\n for paragraphs
+    portfolioContent.about.bio.split('\n\n').forEach(paragraph => {
+        const p = document.createElement('p');
+        p.textContent = paragraph;
+        aboutBio.appendChild(p);
+    });
 
     // Populate card stacks
     populateStack('techStack', portfolioContent.tech.stack);

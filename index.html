@@ -21,9 +21,12 @@
                 <h1 id="name"></h1>
                 <p class="subtitle" id="tagline"></p>
                 <p id="welcomeText"></p>
-                <button class="expand-btn" onclick="toggleOverview(event)">Read more ↓</button>
-                
+
                 <div class="expandable-content" id="overviewExpanded"></div>
+
+                <div class="expand-toggle" onclick="toggleOverview(event)">
+                    <span class="expand-arrow">↓</span>
+                </div>
             </div>
 
             <div class="grid">
@@ -61,24 +64,9 @@
 
         <!-- About Page -->
         <div id="about" class="page">
-            <div class="postcard">
-                <h1>About</h1>
-                <p id="aboutIntro"></p>
-            </div>
-            
-            <div class="postcard">
-                <h2>Tech Startups</h2>
-                <p id="aboutTech"></p>
-            </div>
-
-            <div class="postcard">
-                <h2>Writing</h2>
-                <p id="aboutWriting"></p>
-            </div>
-
-            <div class="postcard">
-                <h2>Music</h2>
-                <p id="aboutMusic"></p>
+            <div class="hero postcard">
+                <h1>about</h1>
+                <div id="aboutBio"></div>
             </div>
 
             <div class="postcard">
