@@ -28,7 +28,8 @@ nav a{font-family:'DM Mono',monospace;font-size:0.78rem;text-decoration:none;col
 nav a:hover,nav a.active{color:var(--hero-accent);}
 
 .page{display:none;}
-.page.active{display:flex;flex-direction:column;animation:fade 0.4s ease;min-height:100vh;}
+.page.active{display:block;animation:fade 0.4s ease;min-height:100vh;}
+
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 .hero{background:var(--hero-bg);padding:2.5rem 3rem;border-bottom:3px solid var(--ink);display:flex;flex-direction:column;gap:2rem;overflow:hidden;}
@@ -44,14 +45,20 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
   grid-template-columns:100% 0%;
   cursor:pointer;
   height:90px;
+  min-height:90px;
+  max-height:90px;
   overflow:hidden;
   flex-shrink:0;
+  align-self:auto;
   transition:
     grid-template-columns 0.55s cubic-bezier(0.77,0,0.18,1),
-    height 0.55s cubic-bezier(0.77,0,0.18,1);
+    height 0.55s cubic-bezier(0.77,0,0.18,1),
+    max-height 0.55s cubic-bezier(0.77,0,0.18,1);
 }
 .row.open{
   height:var(--open-height,280px);
+  min-height:0;
+  max-height:2000px;
   grid-template-columns:38% 62%;
   cursor:default;
 }
@@ -67,6 +74,8 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
 .panel{
   overflow:hidden;
   position:relative;
+  height:100%;
+  align-self:stretch;
 }
 .bg-tech   {background:var(--tech);}
 .bg-music  {background:var(--music);}
@@ -74,7 +83,9 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
 
 /* Collapsed: single row label across full width */
 .panel-collapsed{
-  position:absolute;inset:0;
+  position:absolute;
+  top:0;left:0;right:0;
+  height:90px;
   display:flex;align-items:center;
   gap:2rem;padding:0 3rem;
   white-space:nowrap;overflow:hidden;
@@ -99,7 +110,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
   background:var(--cream);
   display:flex;flex-direction:column;
   align-items:flex-start;justify-content:center;
-  gap:1.25rem;padding:2.5rem 2rem 2.5rem 3rem;
+  gap:1.25rem;padding:3.5rem 2rem 3.5rem 3rem;
   opacity:0;overflow:hidden;
   transition:opacity 0.1s ease;
 }
@@ -150,7 +161,10 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
 .about-hero{background:var(--yellow-bg);padding:5rem 3rem 2.5rem;border-bottom:3px solid var(--ink);}
 .about-hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,8vw,6rem);font-weight:700;line-height:0.88;letter-spacing:-0.03em;color:var(--ink);margin-bottom:1.25rem;}
 .about-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:rgba(26,20,16,0.75);line-height:1.65;}
-.about-body{display:grid;grid-template-columns:1.4fr 1fr;border-bottom:3px solid var(--ink);align-items:stretch;flex:1;}
+.about-body{display:grid;grid-template-columns:1.4fr 1fr;border-bottom:3px solid var(--ink);align-items:stretch;flex:1;min-height:0;}
+
+#about{display:none;flex-direction:column;min-height:100vh;}
+#about.active{display:flex;}
 .about-text{padding:3rem;border-right:3px solid var(--ink);display:flex;flex-direction:column;gap:1.75rem;}
 .about-p{font-size:1.05rem;line-height:1.9;color:var(--ink);}
 .about-p+.about-p{padding-top:1.75rem;border-top:1px solid #ddd8cc;}
@@ -200,7 +214,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
       </div>
     </div>
     <div class="reveal">
-      <p class="reveal-body">I care about equitable and entrepreneurial uses of technology, especially across cities, media, and sustainability. To me, code is nothing without the humans and physical world it touches.</p>
+      <p class="reveal-body">I care about equitable and entrepreneurial uses of technology, especially across cities, media, and culture. To me, code is nothing without the humans and physical world it touches.</p>
       <p class="reveal-body">I naturally gravitate towards cross-functional (and chaotic) settings where I get to be at the intersection of coding, product, and customer deployment.</p>
       <p class="reveal-body">Currently, I work at Merge, building unified APIs and agentic tooling. I've previously worked at Uber and New_ Public. I'm deeply curious about early-stage ventures and have been a fellow with Comma Capital and Kleiner Perkins.</p>
       <button class="close-btn" onclick="close_(event,this)">close →</button>
@@ -258,7 +272,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
     </div>
     <div class="reveal">
       <p class="reveal-body">My writing process feels like sculpting — I start with an amorphous mass and make something meaningful out of it.</p>
-      <p class="reveal-body">I journal and write regularly about my own life — the recurring themes tend to be creativity, relationships, and seasons. I also like to write public-facing essays that break down the complexities of cities, music, and culture.</p>
+      <p class="reveal-body">I journal and write regularly about my own life — the recurring themes tend to be creativity, relationships, and seasons. I also like to write public-facing essays that break down interdisciplinary complexities that I am learning about.</p>
       <p class="reveal-body">I grew up daydreaming and writing fiction (poems and short stories). This is a passion I am rediscovering. .</p>
       <button class="close-btn" onclick="close_(event,this)">close →</button>
     </div>
@@ -271,7 +285,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
       <h2 class="cities-title">living where everything happens, currently in NYC</h2>
     </div>
     <div class="cities-right">
-      <p class="cities-body">Given that I grew up in the suburbs, it might be a bit surprising that I love dense cities. I've always been intrigued by how cities reveal so much about people, systems, and culture. When I was growing up, my dream job was to be a mechanical engineer who worked on smart cities and sustainable development… maybe it still can?</p>
+      <p class="cities-body">Given that I grew up in the suburbs, it might be a bit surprising that I love dense cities. I've always been intrigued by how cities reveal so much about people, systems, and culture. When I was growing up, my dream job was to be a mechanical engineer who worked on smart cities and sustainable development… maybe I still can be?</p>
       <p class="cities-body">My favorites include New York City (evidently), Taipei, and Berlin!</p>
     </div>
   </div><!-- end cities -->
@@ -291,7 +305,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
   <div class="about-body">
     <div class="about-text">
       <p class="about-p">I’m a Midwesterner at heart — I grew up in the suburbs of Cleveland, Ohio. I studied Computer Science and Urban Studies at Princeton University. During my undergraduate studies, I spent a semester abroad at the University of Edinburgh. Since then, I have traveled around Europe, Africa, and Asia, with many more travels to come! I am currently based in New York City.</p>
-      <p class="about-p">I love to try new things. You can find me spending time in nature ("frolicking”) and cloud watching. I find joy in music, comedy, film photography / people-watching, chai lattes, wandering conversations, collaborative projects, and more — all the things.</p>
+      <p class="about-p">I love to try new things. You can find me spending time in nature ("frolicking”). I find joy in music, comedy, film photography / people-watching / cloud-watching, chai lattes, wandering conversations, collaborative projects, and more — all the things. I did not use AI to write this text.</p>
     </div>
     <div class="contact">
       <div>
@@ -316,7 +330,7 @@ function goTo(id) {
   document.getElementById(id).classList.add('active');
   document.getElementById('nav-' + id).classList.add('active');
   sizeCities();
-  setTimeout(sizeAbout, 10);
+
 }
 function getRowHeight(row) {
   // Estimate height from reveal text content
@@ -328,7 +342,7 @@ function getRowHeight(row) {
   const charsPerLine = Math.floor(window.innerWidth * 0.62 / 10);
   const lines = Math.ceil(chars / charsPerLine);
   const lineHeight = 30; // px per line approx
-  const padding = 120;   // top + bottom padding
+  const padding = 160;   // top + bottom padding
   return Math.max(lines * lineHeight + padding, 260);
 }
 
@@ -353,6 +367,7 @@ function sizeCities() {
   const top = el.getBoundingClientRect().top + window.scrollY;
   el.style.minHeight = Math.max(240, window.innerHeight - top) + 'px';
 }
+// sizeAbout removed — handled by CSS flex
 function sizeAbout() {
   const el = document.querySelector('.about-body');
   if (!el) return;
@@ -366,8 +381,8 @@ function sizeOpenRow() {
   if (!openRow) return;
   openRow.style.height = getRowHeight(openRow) + 'px';
 }
-window.addEventListener('resize', () => { sizeCities(); sizeAbout(); sizeOpenRow(); });
-document.addEventListener('DOMContentLoaded', () => { sizeCities(); sizeAbout(); });
+window.addEventListener("resize", () => { sizeCities(); sizeOpenRow(); });
+document.addEventListener("DOMContentLoaded", () => { sizeCities(); });
 sizeCities();
 sizeAbout();
 </script>
