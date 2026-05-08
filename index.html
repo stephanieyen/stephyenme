@@ -34,6 +34,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
 .hero{background:var(--hero-bg);padding:2.5rem 3rem;border-bottom:3px solid var(--ink);display:flex;flex-direction:column;gap:2rem;overflow:hidden;}
 .hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,7rem);font-weight:700;line-height:0.88;letter-spacing:-0.03em;color:var(--cream);}
 .hero-name em{font-style:italic;color:var(--hero-accent);}
+.hero-steph{color:var(--hero-accent);font-style:normal;}
 .hero-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,2.5vw,1.35rem);color:var(--hero-accent);max-width:520px;line-height:1.65;opacity:0.8;}
 
 /* ROW: CSS grid animation for the slide */
@@ -175,7 +176,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
 <div id="home" class="page active">
 
   <div class="hero">
-    <h1 class="hero-name">stephanie<br><em>yen</em></h1>
+    <h1 class="hero-name"><span class="hero-steph">steph</span>anie<br><em>yen</em></h1>
     <p class="hero-tagline">I live at intersections — of cities, sounds, and disciplines :)</p>
   </div>
 
@@ -276,7 +277,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
   </div><!-- end cities -->
 
   <div class="home-footer">
-    <p class="wip">more to come — this is a living document.</p>
+    <p class="wip">more to come</p>
   </div>
 
 </div><!-- end home -->
@@ -289,7 +290,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
   </div>
   <div class="about-body">
     <div class="about-text">
-      <p class="about-p">I’m a Midwesterner at heart — I grew up in the suburbs of Cleveland, Ohio. I studied Computer Science and Urban Studies at Princeton University. During my undergraduate studies, I spent a semester abroad at the University of Edinburgh. Since then, I have traveled around Europe, Africa, and Asia, with much more to come! I am currently based in New York City.</p>
+      <p class="about-p">I’m a Midwesterner at heart — I grew up in the suburbs of Cleveland, Ohio. I studied Computer Science and Urban Studies at Princeton University. During my undergraduate studies, I spent a semester abroad at the University of Edinburgh. Since then, I have traveled around Europe, Africa, and Asia, with many more travels to come! I am currently based in New York City.</p>
       <p class="about-p">I love to try new things. You can find me spending time in nature ("frolicking”) and cloud watching. I find joy in music, comedy, film photography / people-watching, chai lattes, wandering conversations, collaborative projects, and more — all the things.</p>
     </div>
     <div class="contact">
@@ -303,7 +304,7 @@ nav a:hover,nav a.active{color:var(--hero-accent);}
           <a class="contact-link" href="https://open.spotify.com/user/champchomp">spotify</a>
         </div>
       </div>
-      <p class="wip">more to come — this is a living document.</p>
+      <p class="wip">this is a living document.</p>
     </div>
   </div>
 </div>
@@ -317,14 +318,34 @@ function goTo(id) {
   sizeCities();
   setTimeout(sizeAbout, 10);
 }
+function getRowHeight(row) {
+  // Estimate height from reveal text content
+  const reveal = row.querySelector('.reveal');
+  if (!reveal) return 320;
+  const text = reveal.innerText || '';
+  const chars = text.length;
+  // At ~62% width of viewport, ~70 chars per line at 1rem, 1.85 line-height
+  const charsPerLine = Math.floor(window.innerWidth * 0.62 / 10);
+  const lines = Math.ceil(chars / charsPerLine);
+  const lineHeight = 30; // px per line approx
+  const padding = 120;   // top + bottom padding
+  return Math.max(lines * lineHeight + padding, 260);
+}
+
 function toggle(row) {
   if (row.classList.contains('open')) return;
-  document.querySelectorAll('.row.open').forEach(r => r.classList.remove('open'));
+  document.querySelectorAll('.row.open').forEach(r => {
+    r.classList.remove('open');
+    r.style.height = '90px';
+  });
   row.classList.add('open');
+  row.style.height = getRowHeight(row) + 'px';
 }
 function close_(e, btn) {
   e.stopPropagation();
-  btn.closest('.row').classList.remove('open');
+  const row = btn.closest('.row');
+  row.classList.remove('open');
+  row.style.height = '90px';
 }
 function sizeCities() {
   const el = document.getElementById('cities');
@@ -335,13 +356,17 @@ function sizeCities() {
 function sizeAbout() {
   const el = document.querySelector('.about-body');
   if (!el) return;
-  // Reset first so measurement is accurate
   el.style.minHeight = '';
   const top = el.getBoundingClientRect().top + window.scrollY;
-  if (top === 0) return; // page is hidden, skip
+  if (top === 0) return;
   el.style.minHeight = Math.max(300, window.innerHeight - top) + 'px';
 }
-window.addEventListener('resize', () => { sizeCities(); sizeAbout(); });
+function sizeOpenRow() {
+  const openRow = document.querySelector('.row.open');
+  if (!openRow) return;
+  openRow.style.height = getRowHeight(openRow) + 'px';
+}
+window.addEventListener('resize', () => { sizeCities(); sizeAbout(); sizeOpenRow(); });
 document.addEventListener('DOMContentLoaded', () => { sizeCities(); sizeAbout(); });
 sizeCities();
 sizeAbout();
