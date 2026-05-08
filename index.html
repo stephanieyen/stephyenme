@@ -1,82 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>stephanie yen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:#FFF8F0;
+  --hero-bg:#2A4A2A;
+  --hero-accent:#EEF7A0;
+  --tech:#E07828;
+  --music:#8060C8;
+  --writing:#2A4A7A;
+  --cities:#E05585;
+  --yellow-bg:#E8C832;
+  --yellow-accent:#F5D800;
+  --ink:#1A1410;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Libre Baskerville',Georgia,serif;background:var(--cream);color:var(--ink);}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2.5rem;background:var(--hero-bg);position:sticky;top:0;z-index:100;}
+.nav-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--hero-accent);cursor:pointer;}
+nav ul{display:flex;gap:1.75rem;list-style:none;}
+nav a{font-family:'DM Mono',monospace;font-size:0.78rem;text-decoration:none;color:rgba(238,247,160,0.45);letter-spacing:0.15em;cursor:pointer;transition:color 0.2s;}
+nav a:hover,nav a.active{color:var(--hero-accent);}
+
+.page{display:none;}
+.page.active{display:flex;flex-direction:column;animation:fade 0.4s ease;min-height:100vh;}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.hero{background:var(--hero-bg);padding:2.5rem 3rem;border-bottom:3px solid var(--ink);display:flex;flex-direction:column;gap:2rem;overflow:hidden;}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,7vw,7rem);font-weight:700;line-height:0.88;letter-spacing:-0.03em;color:var(--cream);}
+.hero-name em{font-style:italic;color:var(--hero-accent);}
+.hero-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,2.5vw,1.35rem);color:var(--hero-accent);max-width:520px;line-height:1.65;opacity:0.8;}
+
+/* ROW: CSS grid animation for the slide */
+.row{
+  border-bottom:3px solid var(--ink);
+  display:grid;
+  grid-template-columns:100% 0%;
+  cursor:pointer;
+  height:90px;
+  overflow:hidden;
+  flex-shrink:0;
+  transition:
+    grid-template-columns 0.55s cubic-bezier(0.77,0,0.18,1),
+    height 0.55s cubic-bezier(0.77,0,0.18,1);
+}
+.row.open{
+  height:var(--open-height,280px);
+  grid-template-columns:38% 62%;
+  cursor:default;
+}
+/* Flipped: cream left, color right */
+.row.flip{
+  grid-template-columns:0% 100%;
+}
+.row.flip.open{
+  grid-template-columns:62% 38%;
+}
+
+/* PANEL: colored column */
+.panel{
+  overflow:hidden;
+  position:relative;
+}
+.bg-tech   {background:var(--tech);}
+.bg-music  {background:var(--music);}
+.bg-writing{background:var(--writing);}
+
+/* Collapsed: single row label across full width */
+.panel-collapsed{
+  position:absolute;inset:0;
+  display:flex;align-items:center;
+  gap:2rem;padding:0 3rem;
+  white-space:nowrap;overflow:hidden;
+  transition:opacity 0.1s ease;
+}
+.row.open .panel-collapsed{opacity:0;pointer-events:none;}
+.row:not(.open) .panel-collapsed{opacity:1;transition:opacity 0.15s ease 0.35s;}
+
+/* Expanded: centered in the colored column */
+.panel-expanded{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:center;
+  gap:1rem;padding:2rem 3rem;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.1s ease;
+}
+.row.open .panel-expanded{opacity:1;pointer-events:auto;transition:opacity 0.2s ease 0.32s;}
+
+/* REVEAL: cream column */
+.reveal{
+  background:var(--cream);
+  display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:center;
+  gap:1.25rem;padding:2.5rem 2rem 2.5rem 3rem;
+  opacity:0;overflow:hidden;
+  transition:opacity 0.1s ease;
+}
+.row.open .reveal{opacity:1;transition:opacity 0.2s ease 0.32s;}
+
+/* For flipped rows, reveal is the LEFT column (first child in DOM order but visually left via grid) */
+.row.flip .panel{order:2;}
+.row.flip .reveal{order:1;}
+
+/* TYPE */
+.row-num{font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--yellow-accent);}
+.row-title-lg{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;color:#fff;}
+.row-title-sm{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;letter-spacing:-0.01em;color:#fff;line-height:1;}
+.row-hint{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;margin-left:auto;flex-shrink:0;color:var(--yellow-accent);opacity:0.85;}
+
+.tags{display:flex;flex-direction:row;flex-wrap:wrap;gap:0.4rem;}
+.tag{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.07em;padding:0.2rem 0.5rem;border-radius:2px;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);}
+
+.reveal-body{font-size:1rem;line-height:1.85;color:#3a3028;}
+.close-btn{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;cursor:pointer;background:none;border:none;color:var(--ink);padding:0;text-decoration:underline;text-underline-offset:3px;}
+.close-btn:hover{opacity:0.5;}
+
+/* CITIES */
+.cities{
+  background:var(--cities);
+  padding:3.5rem 3rem;
+  display:grid;
+  grid-template-columns:38% 62%;
+  min-height:240px;
+  overflow:hidden;
+}
+.cities-left{display:flex;flex-direction:column;justify-content:flex-start;gap:0.75rem;padding-right:2rem;min-width:0;}
+.cities-right{display:flex;flex-direction:column;justify-content:flex-start;gap:1rem;min-width:0;}
+.cities-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;line-height:1;letter-spacing:-0.02em;color:#fff;}
+.cities-body{font-size:1rem;line-height:1.85;color:rgba(255,255,255,0.85);}
+.cities-num{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--yellow-accent);opacity:0.85;}
+
+/* HOME FOOTER */
+.home-footer{
+  background:var(--hero-bg);
+  padding:2.5rem 3rem;
+  border-top:3px solid var(--ink);
+  border-bottom:3px solid var(--ink);
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+}
+.about-hero{background:var(--yellow-bg);padding:5rem 3rem 2.5rem;border-bottom:3px solid var(--ink);}
+.about-hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,8vw,6rem);font-weight:700;line-height:0.88;letter-spacing:-0.03em;color:var(--ink);margin-bottom:1.25rem;}
+.about-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:rgba(26,20,16,0.75);line-height:1.65;}
+.about-body{display:grid;grid-template-columns:1.4fr 1fr;border-bottom:3px solid var(--ink);align-items:stretch;flex:1;}
+.about-text{padding:3rem;border-right:3px solid var(--ink);display:flex;flex-direction:column;gap:1.75rem;}
+.about-p{font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.about-p+.about-p{padding-top:1.75rem;border-top:1px solid #ddd8cc;}
+.contact{padding:3rem 2.5rem;background:var(--hero-bg);display:flex;flex-direction:column;justify-content:space-between;min-height:100%;}
+.contact-label{font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--hero-accent);opacity:0.55;margin-bottom:1rem;}
+.contact-links{display:flex;flex-direction:column;gap:0.9rem;}
+.contact-link{font-family:'DM Mono',monospace;font-size:0.72rem;text-decoration:none;color:var(--hero-accent);letter-spacing:0.08em;padding:0.4rem 0.75rem;border:1.5px solid var(--hero-accent);border-radius:2px;transition:all 0.2s;display:inline-block;}
+.contact-link:hover{background:var(--hero-accent);color:var(--ink);}
+.wip{font-family:'Playfair Display',serif;font-style:italic;font-size:0.85rem;color:rgba(238,247,160,0.45);}
+</style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#" data-page="home">Home</a></li>
-            <li><a href="#" data-page="about">About</a></li>
-        </ul>
-    </nav>
 
-    <div class="container">
-        <!-- Home Page -->
-        <div id="home" class="page active">
-            <div class="hero postcard" onclick="toggleOverview(event)">
-                <h1 id="name"></h1>
-                <p class="subtitle" id="tagline"></p>
-                <p id="welcomeText"></p>
+<nav>
+  <span class="nav-name" onclick="goTo('home')">s.y.</span>
+  <ul>
+    <li><a id="nav-home" class="active" onclick="goTo('home')">home</a></li>
+    <li><a id="nav-about" onclick="goTo('about')">about</a></li>
+  </ul>
+</nav>
 
-                <div class="expandable-content" id="overviewExpanded"></div>
+<!-- HOME -->
+<div id="home" class="page active">
 
-                <div class="expand-toggle" onclick="toggleOverview(event)">
-                    <span class="expand-arrow">↓</span>
-                </div>
-            </div>
+  <div class="hero">
+    <h1 class="hero-name">stephanie<br><em>yen</em></h1>
+    <p class="hero-tagline">I live at intersections — of cities, sounds, and disciplines :)</p>
+  </div>
 
-            <div class="grid">
-                <div class="card" onclick="toggleCard(this)">
-                    <h3>
-                        <span id="techTitle"></span>
-                        <span class="expand-icon">↓</span>
-                    </h3>
-                    <p id="techSummary"></p>
-                    <div class="card-content" id="techDetails"></div>
-                    <div class="card-stack" id="techStack"></div>
-                </div>
-
-                <div class="card" onclick="toggleCard(this)">
-                    <h3>
-                        <span id="writingTitle"></span>
-                        <span class="expand-icon">↓</span>
-                    </h3>
-                    <p id="writingSummary"></p>
-                    <div class="card-content" id="writingDetails"></div>
-                    <div class="card-stack" id="writingStack"></div>
-                </div>
-
-                <div class="card" onclick="toggleCard(this)">
-                    <h3>
-                        <span id="musicTitle"></span>
-                        <span class="expand-icon">↓</span>
-                    </h3>
-                    <p id="musicSummary"></p>
-                    <div class="card-content" id="musicDetails"></div>
-                    <div class="card-stack" id="musicStack"></div>
-                </div>
-            </div>
+  <!-- 01 TECH: color left, cream right -->
+  <div class="row bg-tech" style="--open-height:420px" onclick="toggle(this)">
+    <div class="panel bg-tech">
+      <div class="panel-collapsed">
+        <span class="row-num">01 · technology</span>
+        <span class="row-title-sm">building & betting on technology</span>
+        <span class="row-hint">click to open →</span>
+      </div>
+      <div class="panel-expanded">
+        <p class="row-num">01 · technology</p>
+        <h2 class="row-title-lg">building & betting on technology that changes how we live</h2>
+        <div class="tags">
+          <span class="tag">startups</span>
+          <span class="tag">engineering</span>
+          <span class="tag">B2B software</span>
+          <span class="tag">application layer</span>
         </div>
-
-        <!-- About Page -->
-        <div id="about" class="page">
-            <div class="hero postcard">
-                <h1>about</h1>
-                <div id="aboutBio"></div>
-            </div>
-
-            <div class="postcard">
-                <h2>Get In Touch</h2>
-                <p id="aboutContact"></p>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="reveal">
+      <p class="reveal-body">I care about equitable and entrepreneurial uses of technology, especially across cities, media, and sustainability. To me, code is nothing without the humans and physical world it touches.</p>
+      <p class="reveal-body">I naturally gravitate towards cross-functional (and chaotic) settings where I get to be at the intersection of coding, product, and customer deployment.</p>
+      <p class="reveal-body">Currently, I work at Merge, building unified APIs and agentic tooling. I've previously worked at Uber and New_ Public. I'm deeply curious about early-stage ventures and have been a fellow with Comma Capital and Kleiner Perkins.</p>
+      <button class="close-btn" onclick="close_(event,this)">close →</button>
+    </div>
+  </div>
 
-    <script src="content.js"></script>
-    <script src="script.js"></script>
+  <!-- 02 MUSIC: flip — cream left, color right -->
+  <div class="row flip bg-music" style="--open-height:360px" onclick="toggle(this)">
+    <div class="panel bg-music">
+      <div class="panel-collapsed">
+        <span class="row-num">02 · music</span>
+        <span class="row-title-sm">always digging for the gold of life</span>
+        <span class="row-hint">← click to open</span>
+      </div>
+      <div class="panel-expanded">
+        <p class="row-num">02 · music</p>
+        <h2 class="row-title-lg">always digging for the gold of life, one track at a time</h2>
+        <div class="tags">
+          <span class="tag">piano</span>
+          <span class="tag">violin</span>
+          <span class="tag">flute</span>
+          <span class="tag">guitar</span>
+          <span class="tag">production</span>
+          <span class="tag">music blog</span>
+          <span class="tag">DJing</span>
+          <span class="tag">concert photography</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="reveal-body">I spend an absurd amount of time listening to, discovering, and curating music (everything from jazz to rock). Music is everywhere — in city streets, films, and how we connect with each other. It is my greatest love in the world!</p>
+      <p class="reveal-body">My long-term goal is to build something at the intersection of music and technology. I am most energized when independent musicians create bold art and architect new worlds.</p>
+      <button class="close-btn" onclick="close_(event,this)">← close</button>
+    </div>
+  </div>
+
+  <!-- 03 WRITING: color left, cream right -->
+  <div class="row bg-writing" style="--open-height:400px" onclick="toggle(this)">
+    <div class="panel bg-writing">
+      <div class="panel-collapsed">
+        <span class="row-num">03 · writing</span>
+        <span class="row-title-sm">sculpting obsessions into words</span>
+        <span class="row-hint">click to open →</span>
+      </div>
+      <div class="panel-expanded">
+        <p class="row-num">03 · writing</p>
+        <h2 class="row-title-lg">sculpting obsessions into words: essays, stories & poems</h2>
+        <div class="tags">
+          <span class="tag">creative nonfiction</span>
+          <span class="tag">research essays</span>
+          <span class="tag">poetry</span>
+          <span class="tag">short stories</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="reveal-body">My writing process feels like sculpting — I start with an amorphous mass and make something meaningful out of it.</p>
+      <p class="reveal-body">I journal and write regularly about my own life — the recurring themes tend to be creativity, relationships, and seasons. I also like to write public-facing essays that break down the complexities of cities, music, and culture.</p>
+      <p class="reveal-body">I grew up daydreaming and writing fiction (poems and short stories). This is a passion I am rediscovering. .</p>
+      <button class="close-btn" onclick="close_(event,this)">close →</button>
+    </div>
+  </div>
+
+  <!-- 04 CITIES -->
+  <div class="cities" id="cities">
+    <div class="cities-left">
+      <p class="cities-num">04 · cities</p>
+      <h2 class="cities-title">living where everything happens, currently in NYC</h2>
+    </div>
+    <div class="cities-right">
+      <p class="cities-body">Given that I grew up in the suburbs, it might be a bit surprising that I love dense cities. I've always been intrigued by how cities reveal so much about people, systems, and culture. When I was growing up, my dream job was to be a mechanical engineer who worked on smart cities and sustainable development… maybe it still can?</p>
+      <p class="cities-body">My favorites include New York City (evidently), Taipei, and Berlin!</p>
+    </div>
+  </div><!-- end cities -->
+
+  <div class="home-footer">
+    <p class="wip">more to come — this is a living document.</p>
+  </div>
+
+</div><!-- end home -->
+
+<!-- ABOUT -->
+<div id="about" class="page">
+  <div class="about-hero">
+    <h1>about</h1>
+    <p class="about-sub">23 y/o, NYC-based human</p>
+  </div>
+  <div class="about-body">
+    <div class="about-text">
+      <p class="about-p">I’m a Midwesterner at heart — I grew up in the suburbs of Cleveland, Ohio. I studied Computer Science and Urban Studies at Princeton University. During my undergraduate studies, I spent a semester abroad at the University of Edinburgh. Since then, I have traveled around Europe, Africa, and Asia, with much more to come! I am currently based in New York City.</p>
+      <p class="about-p">I love to try new things. You can find me spending time in nature ("frolicking”) and cloud watching. I find joy in music, comedy, film photography / people-watching, chai lattes, wandering conversations, collaborative projects, and more — all the things.</p>
+    </div>
+    <div class="contact">
+      <div>
+        <p class="contact-label">get in touch</p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:steph.yensy@gmail.com">email</a>
+          <a class="contact-link" href="https://www.linkedin.com/in/steph-yen/">linkedin</a>
+          <a class="contact-link" href="https://x.com/stey0213">twitter / x</a>
+          <a class="contact-link" href="https://substack.com/@stephyen">substack</a>
+          <a class="contact-link" href="https://open.spotify.com/user/champchomp">spotify</a>
+        </div>
+      </div>
+      <p class="wip">more to come — this is a living document.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTo(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  sizeCities();
+  setTimeout(sizeAbout, 10);
+}
+function toggle(row) {
+  if (row.classList.contains('open')) return;
+  document.querySelectorAll('.row.open').forEach(r => r.classList.remove('open'));
+  row.classList.add('open');
+}
+function close_(e, btn) {
+  e.stopPropagation();
+  btn.closest('.row').classList.remove('open');
+}
+function sizeCities() {
+  const el = document.getElementById('cities');
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY;
+  el.style.minHeight = Math.max(240, window.innerHeight - top) + 'px';
+}
+function sizeAbout() {
+  const el = document.querySelector('.about-body');
+  if (!el) return;
+  // Reset first so measurement is accurate
+  el.style.minHeight = '';
+  const top = el.getBoundingClientRect().top + window.scrollY;
+  if (top === 0) return; // page is hidden, skip
+  el.style.minHeight = Math.max(300, window.innerHeight - top) + 'px';
+}
+window.addEventListener('resize', () => { sizeCities(); sizeAbout(); });
+document.addEventListener('DOMContentLoaded', () => { sizeCities(); sizeAbout(); });
+sizeCities();
+sizeAbout();
+</script>
 </body>
 </html>
